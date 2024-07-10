@@ -29,29 +29,30 @@ Singer Tap for Jotform. Built with the [Meltano Singer SDK](https://sdk.meltano.
 
 ## Settings
 
-| Setting             | Required | Default | Description |
-|:--------------------|:--------:|:-------:|:------------|
-| api_key             | True     | None    | Authentication key. See https://api.jotform.com/docs/#authentication |
-| api_url             | False    | https://api.jotform.com | API Base URL |
-| user_agent          | False    | tap-jotform/0.0.1 | User-Agent header |
-| start_date          | False    | None    | Start date for data collection |
-| requests_cache | False    | None    | Cache configuration for HTTP requests |
-| stream_maps         | False    | None    | Config object for stream maps capability. For more information check out [Stream Maps](https://sdk.meltano.com/en/latest/stream_maps.html). |
-| stream_map_config   | False    | None    | User-defined config values to be used within map expressions. |
-| flattening_enabled  | False    | None    | 'True' to enable schema flattening and automatically expand nested properties. |
-| flattening_max_depth| False    | None    | The max depth to flatten schemas. |
+| Setting              | Required | Default                 | Description                                                                                                                                 |
+| :------------------- | :------- | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| api_key              | True     | None                    | Authentication key. See https://api.jotform.com/docs/#authentication                                                                        |
+| api_url              | False    | https://api.jotform.com | API Base URL                                                                                                                                |
+| user_agent           | False    | tap-jotform/0.0.1       | User-Agent header                                                                                                                           |
+| start_date           | False    | None                    | Start date for data collection                                                                                                              |
+| requests_cache       | False    | None                    | Cache configuration for HTTP requests                                                                                                       |
+| stream_maps          | False    | None                    | Config object for stream maps capability. For more information check out [Stream Maps](https://sdk.meltano.com/en/latest/stream_maps.html). |
+| stream_map_config    | False    | None                    | User-defined config values to be used within map expressions.                                                                               |
+| flattening_enabled   | False    | None                    | 'True' to enable schema flattening and automatically expand nested properties.                                                              |
+| flattening_max_depth | False    | None                    | The max depth to flatten schemas.                                                                                                           |
 
 A full list of supported settings and capabilities is available by running: `tap-jotform --about`
 
 ## Streams
 
-| Stream name | API endpoint      | API docs                                       | Notes |
-| :---------- | :---------------- | :--------------------------------------------- | :---- |
-| forms       | /user/forms       | https://api.jotform.com/docs/#user-forms       | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
-| questions   | /form/{form_id}/questions | https://api.jotform.com/docs/#form-id-questions | |
-| submissions | /user/submissions | https://api.jotform.com/docs/#user-submissions | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication).  |
-| reports     | /user/reports     | https://api.jotform.com/docs/#user-reports | |
-| user_history | /user/history    | https://api.jotform.com/docs/#user-history | |
+| Stream name  | API endpoint              | API docs                                        | Notes                                                                                                  |
+| :----------- | :------------------------ | :---------------------------------------------- | :----------------------------------------------------------------------------------------------------- |
+| forms        | /user/forms               | https://api.jotform.com/docs/#user-forms        | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
+| questions    | /form/{form_id}/questions | https://api.jotform.com/docs/#form-id-questions |                                                                                                        |
+| submissions  | /user/submissions         | https://api.jotform.com/docs/#user-submissions  | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
+| reports      | /user/reports             | https://api.jotform.com/docs/#user-reports      |                                                                                                        |
+| user_history | /user/history             | https://api.jotform.com/docs/#user-history      |                                                                                                        |
+| subusers     | /user/history             | https://api.jotform.com/docs/#user-subusers     | Requires an Enterprise account                                                                         |
 
 
 ### Configuring incremental replication
