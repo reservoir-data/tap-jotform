@@ -155,7 +155,7 @@ class SubmissionsStream(JotformPaginatedStream):
         th.Property(
             "status",
             th.StringType,
-            allowed_values=["ACTIVE", "OVERQUOTA", "DELETED"],
+            allowed_values=["ACTIVE", "OVERQUOTA", "DELETED", "ARCHIVED", "CUSTOM"],
         ),
         th.Property(
             "new",
