@@ -1,5 +1,5 @@
 ci:
-  autofix_commit_msg: "[pre-commit.ci] auto fixes"
+  autofix_commit_msg: "chore: pre-commit.ci auto fixes"
   autofix_prs: true
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "chore(deps-dev): pre-commit autoupdate"
@@ -32,5 +32,6 @@ repos:
     hooks:
       - id: mypy
         pass_filenames: true
+        language: python
         additional_dependencies:
-          - types-requests
+        - types-requests==2.32.0.20241016

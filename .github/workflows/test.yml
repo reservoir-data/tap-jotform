@@ -28,13 +28,21 @@ concurrency:
 
 env:
   FORCE_COLOR: "1"
+  # renovate: datasource=pypi depName=nox
+  NOX_VERSION: 2024.10.9
+  # renovate: datasource=pypi depName=nox-poetry
+  NOX_POETRY_VERSION: 1.0.3
+  # renovate: datasource=pypi depName=pip
+  PIP_VERSION: 24.3.1
+  # renovate: datasource=pypi depName=poetry
+  POETRY_VERSION: 1.8.5
+  # renovate: datasource=pypi depName=poetry-dynamic-versioning
+  POETRY_DYNAMIC_VERSIONING_VERSION: 1.7.1
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
-      PIP_CONSTRAINT: ${{ github.workspace }}/.github/workflows/constraints.txt
-      FORCE_COLOR: "1"
       NOXSESSION: run
       NOXPYTHON: "3.12"
     steps:
@@ -50,15 +58,15 @@ jobs:
 
       - name: Install Poetry
         run: |
-          pipx install poetry
-          pipx inject poetry poetry-dynamic-versioning[plugin]
+          pipx install poetry==${{ env.POETRY_VERSION }}
+          pipx inject poetry poetry-dynamic-versioning[plugin]==${{ env.POETRY_DYNAMIC_VERSIONING_VERSION }}
           poetry --version
           poetry self show plugins
 
       - name: Install Nox
         run: |
-          pipx install nox
-          pipx inject nox nox-poetry
+          pipx install nox==${{ env.NOX_VERSION }}
+          pipx inject nox nox-poetry==${{ env.NOX_POETRY_VERSION }}
           nox --version
 
       - name: Run Nox
@@ -75,13 +83,11 @@ jobs:
           path: http_cache.sqlite
 
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: run
     env:
-      PIP_CONSTRAINT: ${{ github.workspace }}/.github/workflows/constraints.txt
       NOXSESSION: ${{ matrix.session }}
       NOXPYTHON: ${{ matrix.python-version }}
-      FORCE_COLOR: "1"
     strategy:
       matrix:
         include:
@@ -108,20 +114,20 @@ jobs:
 
     - name: Upgrade pip
       run: |
-        pip install pip
+        pip install pip==${{ env.PIP_VERSION }}
         pip --version
 
     - name: Install Poetry
       run: |
-        pipx install poetry
-        pipx inject poetry poetry-dynamic-versioning[plugin]
+        pipx install poetry==${{ env.POETRY_VERSION }}
+        pipx inject poetry poetry-dynamic-versioning[plugin]==${{ env.POETRY_DYNAMIC_VERSIONING_VERSION }}
         poetry --version
         poetry self show plugins
 
     - name: Install Nox
       run: |
-        pipx install nox
-        pipx inject nox nox-poetry
+        pipx install nox==${{ env.NOX_VERSION }}
+        pipx inject nox nox-poetry==${{ env.NOX_POETRY_VERSION }}
         nox --version
 
     - name: Download request cache

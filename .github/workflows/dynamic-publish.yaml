@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       package_version: ${{ steps.baipp.outputs.package_version }}
     steps:
@@ -21,7 +21,7 @@ jobs:
         id: baipp
 
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: build
     environment:
       name: pypi
