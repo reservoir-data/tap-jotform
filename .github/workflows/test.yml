@@ -38,6 +38,8 @@ env:
   POETRY_VERSION: 2.0.1
   # renovate: datasource=pypi depName=poetry-dynamic-versioning
   POETRY_DYNAMIC_VERSIONING_VERSION: 1.7.1
+  # renovate: datasource=pypi depName=poetry-plugin-export
+  POETRY_PLUGIN_EXPORT_VERSION: 1.9.0
 
 jobs:
   run:
@@ -59,6 +61,7 @@ jobs:
       - name: Install Poetry
         run: |
           pipx install poetry==${{ env.POETRY_VERSION }}
+          pipx inject poetry poetry-plugin-export==${{ env.POETRY_PLUGIN_EXPORT_VERSION }}
           pipx inject poetry poetry-dynamic-versioning[plugin]==${{ env.POETRY_DYNAMIC_VERSIONING_VERSION }}
           poetry --version
           poetry self show plugins
@@ -120,6 +123,7 @@ jobs:
     - name: Install Poetry
       run: |
         pipx install poetry==${{ env.POETRY_VERSION }}
+        pipx inject poetry poetry-plugin-export==${{ env.POETRY_PLUGIN_EXPORT_VERSION }}
         pipx inject poetry poetry-dynamic-versioning[plugin]==${{ env.POETRY_DYNAMIC_VERSIONING_VERSION }}
         poetry --version
         poetry self show plugins
