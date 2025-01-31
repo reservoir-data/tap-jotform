@@ -1,8 +1,8 @@
 [build-system]
 build-backend = "poetry_dynamic_versioning.backend"
 requires = [
-  "poetry-core>=1.1",
-  "poetry-dynamic-versioning",
+  "poetry-core==1.9.1",
+  "poetry-dynamic-versioning==1.7.1",
 ]
 
 [tool.poetry]
@@ -77,7 +77,6 @@ lint.select = [
   "ALL",
 ]
 lint.ignore = [
-  "ANN101",
   "COM812",
   "DJ",
   "ISC001",
