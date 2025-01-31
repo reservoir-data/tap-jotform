@@ -33,8 +33,7 @@ class TapJotform(Tap):
             th.StringType,
             required=True,
             description=(
-                "Authentication key. "
-                "See https://api.jotform.com/docs/#authentication"
+                "Authentication key. See https://api.jotform.com/docs/#authentication"
             ),
         ),
         th.Property(
