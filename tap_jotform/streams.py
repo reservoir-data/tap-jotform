@@ -167,7 +167,8 @@ class SubmissionsStream(JotformPaginatedStream):
             th.ArrayType(
                 th.ObjectType(
                     th.Property("qid", th.StringType, required=True),
-                    th.Property("answer", th.StringType),
+                    th.Property("answer", th.StringType, deprecated=True),
+                    th.Property("answer_object", th.AnyType()),
                 ),
             ),
         ),
@@ -190,6 +191,7 @@ class SubmissionsStream(JotformPaginatedStream):
         for qid, entry in answers.items():
             answer = entry.get("answer")
             entry["answer"] = json.dumps(answer) if answer is not None else None
+            entry["answer_object"] = answer
             value: dict[str, str | None] = {"qid": qid, **entry}
             answers_list.append(value)
         row["answers"] = answers_list
