@@ -3,6 +3,8 @@ send_anonymous_usage_stats: false
 default_environment: dev
 env:
   SINGER_SDK_LOG_CONFIG: logging.jotform.yaml
+venv:
+  backend: uv
 plugins:
   extractors:
   - name: tap-jotform
