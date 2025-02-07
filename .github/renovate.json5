@@ -1,0 +1,9 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "extends": [
+    // https://docs.renovatebot.com/config-presets/#grouporganization-level-presets
+    // https://github.com/reservoir-data/.github/blob/main/.github/renovate.json5
+    "github>reservoir-data/.github//.github/renovate.json5",
+  ]
+}

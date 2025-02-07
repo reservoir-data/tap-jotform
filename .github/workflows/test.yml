@@ -28,37 +28,48 @@ concurrency:
 
 env:
   FORCE_COLOR: "1"
+  # renovate: datasource=pypi depName=nox
+  NOX_VERSION: 2024.10.9
+  # renovate: datasource=pypi depName=nox-poetry
+  NOX_POETRY_VERSION: 1.1.0
+  # renovate: datasource=pypi depName=pip
+  PIP_VERSION: 25.0
+  # renovate: datasource=pypi depName=poetry
+  POETRY_VERSION: 2.0.1
+  # renovate: datasource=pypi depName=poetry-dynamic-versioning
+  POETRY_DYNAMIC_VERSIONING_VERSION: 1.7.1
+  # renovate: datasource=pypi depName=poetry-plugin-export
+  POETRY_PLUGIN_EXPORT_VERSION: 1.9.0
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
-      PIP_CONSTRAINT: ${{ github.workspace }}/.github/workflows/constraints.txt
-      FORCE_COLOR: "1"
       NOXSESSION: run
       NOXPYTHON: "3.12"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5.3.0
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
           python-version: 3.x
 
       - name: Install Poetry
         run: |
-          pipx install poetry
-          pipx inject poetry poetry-dynamic-versioning[plugin]
+          pipx install poetry==${{ env.POETRY_VERSION }}
+          pipx inject poetry poetry-plugin-export==${{ env.POETRY_PLUGIN_EXPORT_VERSION }}
+          pipx inject poetry poetry-dynamic-versioning[plugin]==${{ env.POETRY_DYNAMIC_VERSIONING_VERSION }}
           poetry --version
           poetry self show plugins
 
       - name: Install Nox
         run: |
-          pipx install nox
-          pipx inject nox nox-poetry
+          pipx install nox==${{ env.NOX_VERSION }}
+          pipx inject nox nox-poetry==${{ env.NOX_POETRY_VERSION }}
           nox --version
 
       - name: Run Nox
@@ -69,19 +80,17 @@ jobs:
           nox
 
       - name: Upload request cache
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         with:
           name: requests-cache
           path: http_cache.sqlite
 
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: run
     env:
-      PIP_CONSTRAINT: ${{ github.workspace }}/.github/workflows/constraints.txt
       NOXSESSION: ${{ matrix.session }}
       NOXPYTHON: ${{ matrix.python-version }}
-      FORCE_COLOR: "1"
     strategy:
       matrix:
         include:
@@ -94,12 +103,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4.1.2
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         fetch-depth: 0
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5.3.0
+      uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
       with:
         python-version: ${{ matrix.python-version }}
         allow-prereleases: true
@@ -108,24 +117,25 @@ jobs:
 
     - name: Upgrade pip
       run: |
-        pip install pip
+        pip install pip==${{ env.PIP_VERSION }}
         pip --version
 
     - name: Install Poetry
       run: |
-        pipx install poetry
-        pipx inject poetry poetry-dynamic-versioning[plugin]
+        pipx install poetry==${{ env.POETRY_VERSION }}
+        pipx inject poetry poetry-plugin-export==${{ env.POETRY_PLUGIN_EXPORT_VERSION }}
+        pipx inject poetry poetry-dynamic-versioning[plugin]==${{ env.POETRY_DYNAMIC_VERSIONING_VERSION }}
         poetry --version
         poetry self show plugins
 
     - name: Install Nox
       run: |
-        pipx install nox
-        pipx inject nox nox-poetry
+        pipx install nox==${{ env.NOX_VERSION }}
+        pipx inject nox nox-poetry==${{ env.NOX_POETRY_VERSION }}
         nox --version
 
     - name: Download request cache
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
       with:
         name: requests-cache
 

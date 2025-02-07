@@ -1,5 +1,5 @@
 ci:
-  autofix_commit_msg: "[pre-commit.ci] auto fixes"
+  autofix_commit_msg: "chore: pre-commit.ci auto fixes"
   autofix_prs: true
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "chore(deps-dev): pre-commit autoupdate"
@@ -21,16 +21,17 @@ repos:
       - id: pyproject-fmt
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.8.1"
+    rev: "v0.9.4"
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix, --show-fixes]
       - id: ruff-format
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.13.0
+    rev: v1.14.1
     hooks:
       - id: mypy
         pass_filenames: true
+        language: python
         additional_dependencies:
-          - types-requests
+        - types-requests==2.32.0.20241016
