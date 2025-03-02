@@ -168,7 +168,23 @@ class SubmissionsStream(JotformPaginatedStream):
                 th.ObjectType(
                     th.Property("qid", th.StringType, required=True),
                     th.Property("answer", th.StringType, deprecated=True),
-                    th.Property("answer_object", th.AnyType()),
+                    th.Property(
+                        "answer_object",
+                        th.CustomType(
+                            {
+                                "type": [
+                                    "object",
+                                    "array",
+                                    "integer",
+                                    "number",
+                                    "boolean",
+                                    "string",
+                                    "null",
+                                ]
+                            },
+                        ),
+                        description="The answer object",
+                    ),
                 ),
             ),
         ),
