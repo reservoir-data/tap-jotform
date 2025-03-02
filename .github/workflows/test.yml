@@ -29,7 +29,7 @@ concurrency:
 env:
   FORCE_COLOR: "1"
   # renovate: datasource=pypi depName=nox
-  NOX_VERSION: 2024.10.9
+  NOX_VERSION: 2025.2.9
   # renovate: datasource=pypi depName=nox-poetry
   NOX_POETRY_VERSION: 1.1.0
   # renovate: datasource=pypi depName=pip
