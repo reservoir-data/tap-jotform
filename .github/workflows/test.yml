@@ -37,7 +37,7 @@ env:
   # renovate: datasource=pypi depName=poetry
   POETRY_VERSION: 2.1.1
   # renovate: datasource=pypi depName=poetry-dynamic-versioning
-  POETRY_DYNAMIC_VERSIONING_VERSION: 1.7.1
+  POETRY_DYNAMIC_VERSIONING_VERSION: 1.8.0
   # renovate: datasource=pypi depName=poetry-plugin-export
   POETRY_PLUGIN_EXPORT_VERSION: 1.9.0
 
