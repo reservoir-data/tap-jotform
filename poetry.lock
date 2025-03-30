@@ -1270,13 +1270,13 @@ files = [
 
 [[package]]
 name = "url-normalize"
-version = "2.0.0"
+version = "2.0.1"
 description = "URL normalization for Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "url_normalize-2.0.0-py3-none-any.whl", hash = "sha256:b563eadd6dc364e47930390f5c2e273df78bc4dbb5f8b0a97962fb2a1fa238dd"},
-    {file = "url_normalize-2.0.0.tar.gz", hash = "sha256:d987ae0bc134cd2ffcdfd0c6528954dfa7a4065b188499f370b0d39308889443"},
+    {file = "url_normalize-2.0.1-py3-none-any.whl", hash = "sha256:c15cabbee757b94c86868bc2adb1d31679851307681e2f3d424b40e652799231"},
+    {file = "url_normalize-2.0.1.tar.gz", hash = "sha256:f45566acecd1a10b198b22bac6737887a261d08f4254c058294bd10e777fb5cf"},
 ]
 
 [package.dependencies]
