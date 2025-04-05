@@ -1048,13 +1048,13 @@ files = [
 
 [[package]]
 name = "singer-sdk"
-version = "0.44.3"
+version = "0.45.5"
 description = "A framework for building Singer taps"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "singer_sdk-0.44.3-py3-none-any.whl", hash = "sha256:25cdde6552750485aaa0c98f5c5ba6bdd7e4c69e982c7d4c2631c6df3e64b1ae"},
-    {file = "singer_sdk-0.44.3.tar.gz", hash = "sha256:f2d7eacb4a05270613dc7c02cdcef383f3146e859a14dbdb7c207c90466c7701"},
+    {file = "singer_sdk-0.45.5-py3-none-any.whl", hash = "sha256:171450d762c5268387625032a57460882ee25eff1ee88dc3b853d915c4ebbeb2"},
+    {file = "singer_sdk-0.45.5.tar.gz", hash = "sha256:4607da741ad742e1feea181fc08ee241dcbe1f244b42404182d48bcbd58982a8"},
 ]
 
 [package.dependencies]
@@ -1082,9 +1082,9 @@ sqlalchemy = ">=1.4,<3.0"
 typing-extensions = ">=4.5.0"
 
 [package.extras]
-docs = ["furo (>=2024.5.6)", "myst-parser (>=3)", "pytest (>=7.2.1)", "sphinx (>=7)", "sphinx-copybutton (>=0.5.2)", "sphinx-inline-tabs (>=2023.4.21)", "sphinx-notfound-page (>=1.0.0)", "sphinx-reredirects (>=0.1.5)"]
 faker = ["faker (>=22.5)"]
 jwt = ["cryptography (>=3.4.6)", "pyjwt (>=2.4,<3.0)"]
+msgspec = ["msgspec (>=0.19.0)"]
 parquet = ["numpy (>=1.22)", "pyarrow (>=13)"]
 s3 = ["fs-s3fs (>=1.1.1)", "s3fs (>=2024.9.0)"]
 ssh = ["paramiko (>=3.3.0)"]
@@ -1324,4 +1324,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9"
-content-hash = "094db6ae436de215de739182ea89379dfa0191e18a32813087687341f8d3c739"
+content-hash = "157340adb45fff9bb8f95d6b22394feb3ce1b62708cd87aed7834653374cd29b"
