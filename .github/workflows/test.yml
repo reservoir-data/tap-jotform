@@ -33,7 +33,7 @@ env:
   # renovate: datasource=pypi depName=nox-poetry
   NOX_POETRY_VERSION: 1.2.0
   # renovate: datasource=pypi depName=pip
-  PIP_VERSION: 25.0.1
+  PIP_VERSION: 25.1
   # renovate: datasource=pypi depName=poetry
   POETRY_VERSION: 2.1.2
   # renovate: datasource=pypi depName=poetry-dynamic-versioning
