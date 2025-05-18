@@ -22,6 +22,7 @@ src_dir = "tap_jotform"
 tests_dir = "tests"
 
 python_versions = [
+    "3.14",
     "3.13",
     "3.12",
     "3.11",
