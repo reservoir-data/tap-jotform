@@ -3,6 +3,8 @@ ci:
   autofix_prs: true
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "chore(deps-dev): pre-commit autoupdate"
+  skip:
+  - uv-lock
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -23,7 +25,7 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: "v0.11.12"
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix, --exit-non-zero-on-fix, --show-fixes]
       - id: ruff-format
 
@@ -35,3 +37,9 @@ repos:
         language: python
         additional_dependencies:
         - types-requests==2.32.0.20250328
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: "0.7.11"
+    hooks:
+      - id: uv-lock
+      - id: uv-sync

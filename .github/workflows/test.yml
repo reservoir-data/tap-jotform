@@ -29,54 +29,28 @@ concurrency:
 env:
   FORCE_COLOR: "1"
   # renovate: datasource=pypi depName=nox
-  NOX_VERSION: 2025.2.9
-  # renovate: datasource=pypi depName=nox-poetry
-  NOX_POETRY_VERSION: 1.2.0
-  # renovate: datasource=pypi depName=pip
-  PIP_VERSION: 25.1
-  # renovate: datasource=pypi depName=poetry
-  POETRY_VERSION: 2.1.2
-  # renovate: datasource=pypi depName=poetry-dynamic-versioning
-  POETRY_DYNAMIC_VERSIONING_VERSION: 1.8.2
-  # renovate: datasource=pypi depName=poetry-plugin-export
-  POETRY_PLUGIN_EXPORT_VERSION: 1.9.0
+  NOX_VERSION: 2025.5.1
+  # renovate: datasource=pypi depName=uv
+  UV_VERSION: 0.7.11
 
 jobs:
   run:
     runs-on: ubuntu-24.04
     env:
       NOXSESSION: run
-      NOXPYTHON: "3.12"
     steps:
-      - name: Checkout code
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: astral-sh/setup-uv@f0ec1fc3b38f5e7cd731bb6ce540c5af426746bb # v6.1.0
         with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
-        with:
-          python-version: 3.x
-
-      - name: Install Poetry
-        run: |
-          pipx install poetry==${{ env.POETRY_VERSION }}
-          pipx inject poetry poetry-plugin-export==${{ env.POETRY_PLUGIN_EXPORT_VERSION }}
-          pipx inject poetry poetry-dynamic-versioning[plugin]==${{ env.POETRY_DYNAMIC_VERSIONING_VERSION }}
-          poetry --version
-          poetry self show plugins
-
-      - name: Install Nox
-        run: |
-          pipx install nox==${{ env.NOX_VERSION }}
-          pipx inject nox nox-poetry==${{ env.NOX_POETRY_VERSION }}
-          nox --version
-
+          version: ${{ env.UV_VERSION }}
       - name: Run Nox
         env:
           TAP_JOTFORM_API_KEY: ${{ secrets.TAP_JOTFORM_API_KEY }}
           TAP_JOTFORM_API_URL: "https://api.jotform.com"
-        run: |
+        run: >
+          uvx
+          --managed-python
+          --with nox==${{ env.NOX_VERSION }}
           nox
 
       - name: Upload request cache
@@ -90,7 +64,7 @@ jobs:
     needs: run
     env:
       NOXSESSION: ${{ matrix.session }}
-      NOXPYTHON: ${{ matrix.python-version }}
+      NOXFORCEPYTHON: ${{ matrix.python-version }}
     strategy:
       matrix:
         include:
@@ -103,38 +77,10 @@ jobs:
         - {python-version: "3.9",  session: "tests"}
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - uses: astral-sh/setup-uv@f0ec1fc3b38f5e7cd731bb6ce540c5af426746bb # v6.1.0
       with:
-        fetch-depth: 0
-
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
-      with:
-        python-version: ${{ matrix.python-version }}
-        allow-prereleases: true
-        cache: pip
-        cache-dependency-path: poetry.lock
-
-    - name: Upgrade pip
-      run: |
-        pip install pip==${{ env.PIP_VERSION }}
-        pip --version
-
-    - name: Install Poetry
-      run: |
-        pipx install poetry==${{ env.POETRY_VERSION }}
-        pipx inject poetry poetry-plugin-export==${{ env.POETRY_PLUGIN_EXPORT_VERSION }}
-        pipx inject poetry poetry-dynamic-versioning[plugin]==${{ env.POETRY_DYNAMIC_VERSIONING_VERSION }}
-        poetry --version
-        poetry self show plugins
-
-    - name: Install Nox
-      run: |
-        pipx install nox==${{ env.NOX_VERSION }}
-        pipx inject nox nox-poetry==${{ env.NOX_POETRY_VERSION }}
-        nox --version
-
+        version: ${{ env.UV_VERSION }}
     - name: Download request cache
       uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
       with:
@@ -144,5 +90,9 @@ jobs:
       env:
         TAP_JOTFORM_API_KEY: ${{ secrets.TAP_JOTFORM_API_KEY }}
         TAP_JOTFORM_API_URL: "https://api.jotform.com"
-      run: |
+      run: >
+        uvx
+        --managed-python
+        --python ${{ matrix.python-version }}
+        --with nox==${{ env.NOX_VERSION }}
         nox --verbose

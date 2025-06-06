@@ -1,19 +1,24 @@
 [build-system]
-build-backend = "poetry_dynamic_versioning.backend"
+build-backend = "hatchling.build"
 requires = [
-  "poetry-core==2.1.3",
-  "poetry-dynamic-versioning==1.8.2",
+  "hatch-vcs==0.5",
+  "hatchling==1.27",
 ]
 
-[tool.poetry]
+[project]
 name = "tap-jotform"
-version = "0.0.0"
 description = "Singer tap for Jotform, built with the Meltano SDK for Singer Taps."
-license = "Apache-2.0"
-authors = [
-  "Edgar Ramírez-Mondragón <edgarrm358@gmail.com>",
+readme = "README.md"
+keywords = [
+  "ELT",
+  "Jotform",
 ]
+license = "Apache-2.0"
+maintainers = [ { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" } ]
+authors = [ { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" } ]
+requires-python = ">=3.9"
 classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -21,59 +26,41 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
 ]
-maintainers = [
-  "Edgar Ramírez-Mondragón <edgarrm358@gmail.com>",
-]
-readme = "README.md"
-homepage = "https://github.com/edgarrmondragon/tap-jotform"
-repository = "https://github.com/edgarrmondragon/tap-jotform"
-documentation = "https://github.com/edgarrmondragon/tap-jotform/#readme"
-keywords = [
-  "ELT",
-  "Jotform",
+dynamic = [ "version" ]
+dependencies = [
+  "colorama==0.4.*",
+  "requests-cache==1.2.*",
+  "singer-sdk==0.46.*",
+  "structlog==25.3.*",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.9"
-colorama = "==0.4.*"
-requests-cache = "==1.2.*"
-singer-sdk = "==0.46.*"
-structlog = "==25.3.*"
+urls.Documentation = "https://github.com/edgarrmondragon/tap-jotform/#readme"
+urls.Homepage = "https://github.com/edgarrmondragon/tap-jotform"
+urls.Repository = "https://github.com/edgarrmondragon/tap-jotform"
+scripts.tap-jotform = "tap_jotform.tap:TapJotform.cli"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "==8.*"
-singer-sdk = { version = "==0.46.*", extras = [
-  "testing",
-] }
+[dependency-groups]
+dev = [
+  { include-group = "testing" },
+  { include-group = "typing" },
+]
+ci = [
+  "pytest-github-actions-annotate-failures>=0.3",
+]
+testing = [
+  "pytest==8.*",
+  "singer-sdk[testing]==0.46.*",
+]
+typing = [
+  "mypy>=1.11.1",
+  "types-requests",
+]
 
-[tool.poetry.scripts]
-# CLI declaration
-tap-jotform = 'tap_jotform.tap:TapJotform.cli'
-
-[tool.poetry-dynamic-versioning]
-enable = true
-format-jinja = """
-    {%- if distance == 0 -%}
-        {{ serialize_pep440(base, stage, revision) }}
-    {%- elif revision is not none -%}
-        {{ serialize_pep440(base, stage, revision + 1, dev=distance, metadata=[commit]) }}
-    {%- else -%}
-        {{ serialize_pep440(bump_version(base), stage, revision, dev=distance, metadata=[commit]) }}
-    {%- endif -%}
-"""
-metadata = true
-style = "pep440"
-vcs = "git"
+[tool.hatch.version]
+source = "vcs"
 
 [tool.ruff]
-target-version = "py39"
-
 line-length = 88
-src = [
-  "noxfile.py",
-  "tap_jotform",
-  "tests",
-]
 lint.select = [
   "ALL",
 ]
@@ -90,9 +77,6 @@ lint.per-file-ignores."tests/*" = [
   "ANN",
 ]
 lint.flake8-annotations.allow-star-arg-any = true
-lint.isort.known-first-party = [
-  "tap_jotform",
-]
 lint.pydocstyle.convention = "google"
 
 [tool.pyproject-fmt]
