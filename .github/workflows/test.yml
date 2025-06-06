@@ -66,6 +66,7 @@ jobs:
       NOXSESSION: ${{ matrix.session }}
       NOXFORCEPYTHON: ${{ matrix.python-version }}
     strategy:
+      fail-fast: false
       matrix:
         include:
         - {python-version: "3.13", session: "mypy"}
