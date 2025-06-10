@@ -7,20 +7,18 @@ on:
       - tap_jotform/**
       - tests/**
       - noxfile.py
-      - poetry.lock
       - pyproject.toml
+      - uv.lock
       - .github/workflows/test.yml
-      - .github/workflows/constraints.txt
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
       - tap_jotform/**
       - tests/**
       - noxfile.py
-      - poetry.lock
       - pyproject.toml
+      - uv.lock
       - .github/workflows/test.yml
-      - .github/workflows/constraints.txt
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
