@@ -31,7 +31,7 @@ dependencies = [
   "colorama==0.4.*",
   "requests-cache==1.2.*",
   "singer-sdk==0.46.*",
-  "structlog==25.3.*",
+  "structlog==25.4.*",
 ]
 
 urls.Documentation = "https://github.com/edgarrmondragon/tap-jotform/#readme"
