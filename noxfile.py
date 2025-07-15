@@ -16,7 +16,6 @@ python_versions = [
     "3.12",
     "3.11",
     "3.10",
-    "3.9",
 ]
 locations = src_dir, tests_dir, "noxfile.py"
 nox.needs_version = ">=2025.2.9"
