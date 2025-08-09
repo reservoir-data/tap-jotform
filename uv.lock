@@ -2,6 +2,9 @@ version = 1
 revision = 2
 requires-python = ">=3.10"
 
+[options]
+prerelease-mode = "allow"
+
 [[package]]
 name = "attrs"
 version = "25.3.0"

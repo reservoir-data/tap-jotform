@@ -85,3 +85,6 @@ max_supported_python = "3.14"
 addopts = [
   "-vvv",
 ]
+
+[tool.uv]
+prerelease = "allow"
