@@ -12,7 +12,7 @@ plugins:
     label: Jotform
     description: Full-featured online form builder that makes it easy to create robust
       forms and collect important data.
-    repo: https://github.com/edgarrmondragon/tap-jotform
+    repo: https://github.com/reservoir-data/tap-jotform
     pip_url: -e .
     capabilities:
     - state

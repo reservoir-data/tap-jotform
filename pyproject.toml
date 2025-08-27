@@ -33,9 +33,9 @@ dependencies = [
   "structlog==25.4.*",
 ]
 
-urls.Documentation = "https://github.com/edgarrmondragon/tap-jotform/#readme"
-urls.Homepage = "https://github.com/edgarrmondragon/tap-jotform"
-urls.Repository = "https://github.com/edgarrmondragon/tap-jotform"
+urls.Documentation = "https://github.com/reservoir-data/tap-jotform/#readme"
+urls.Homepage = "https://github.com/reservoir-data/tap-jotform"
+urls.Repository = "https://github.com/reservoir-data/tap-jotform"
 scripts.tap-jotform = "tap_jotform.tap:TapJotform.cli"
 
 [dependency-groups]

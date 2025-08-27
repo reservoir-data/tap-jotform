@@ -3,11 +3,11 @@
 # tap-jotform
 
 <div>
-  <a href="https://results.pre-commit.ci/latest/github/edgarrmondragon/tap-jotform/main">
-    <img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/edgarrmondragon/tap-jotform/main.svg"/>
+  <a href="https://results.pre-commit.ci/latest/github/reservoir-data/tap-jotform/main">
+    <img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/reservoir-data/tap-jotform/main.svg"/>
   </a>
-  <a href="https://github.com/edgarrmondragon/tap-jotform/blob/main/LICENSE">
-    <img alt="License" src="https://img.shields.io/github/license/edgarrmondragon/tap-jotform"/>
+  <a href="https://github.com/reservoir-data/tap-jotform/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/github/license/reservoir-data/tap-jotform"/>
   </a>
   <a href="https://pypi.org/p/tap-jotform">
     <img alt="License" src="https://img.shields.io/pypi/pyversions/tap-jotform"/>
