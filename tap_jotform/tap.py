@@ -17,7 +17,7 @@ def get_package_version() -> str:
         The package version number.
     """
     try:
-        return metadata.version(__package__)
+        return metadata.version("tap-jotform")
     except metadata.PackageNotFoundError:
         return "<unknown>"
 
@@ -79,6 +79,12 @@ class TapJotform(Tap):
             ),
             description="Cache configuration for HTTP requests",
         ),
+        th.Property(
+            "include_deprecated_streams",
+            th.BooleanType,
+            default=True,
+            description="Whether to include deprecated streams",
+        ),
     ).to_dict()
 
     def discover_streams(self) -> list[Stream]:
@@ -87,12 +93,18 @@ class TapJotform(Tap):
         Returns:
             A list of discovered streams.
         """
-        return [
+        all_streams: list[Stream] = [
             streams.FormsStream(self),
             streams.QuestionsStream(self),
             streams.SubmissionsStream(self),
             streams.ReportsStream(self),
             streams.UserHistory(self),
-            streams.FoldersStream(self),
             streams.LabelsStream(self),
         ]
+        if self.config.get("include_deprecated_streams"):
+            all_streams.extend(
+                [
+                    streams.FoldersStream(self),
+                ]
+            )
+        return all_streams
