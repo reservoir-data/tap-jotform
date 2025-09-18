@@ -765,10 +765,10 @@ wheels = [
 
 [[package]]
 name = "singer-sdk"
-version = "0.47.4"
+version = "0.49.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "backoff", marker = "python_full_version < '4'" },
+    { name = "backoff" },
     { name = "backports-datetime-fromisoformat", marker = "python_full_version < '3.11'" },
     { name = "click" },
     { name = "fsspec" },
@@ -785,12 +785,12 @@ dependencies = [
     { name = "simpleeval" },
     { name = "simplejson" },
     { name = "sqlalchemy" },
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
     { name = "universal-pathlib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c8/5b/1b8e37d223e7651c30ecc45d5772950c5babb4f137494a444e314d160e2e/singer_sdk-0.47.4.tar.gz", hash = "sha256:d70642f2f5d55f794fe3b311ccacabb86a41c3a3bb37260b3119d3aadce0459c", size = 2450794, upload-time = "2025-06-25T00:49:58Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/61/d0/0bb79565d17e6100288dba02c5db12a38c121ed294b6a464cec3c1becef5/singer_sdk-0.49.1.tar.gz", hash = "sha256:8839ef96e169c83b1c2c63bcc45156e65cd69e6f9dc944f07767fd385f69777d", size = 1311097, upload-time = "2025-09-14T18:32:17.867Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/48/06/00943f3da3998aa929a761286b8b84e7305083cc70d41cf88ecd9bf65186/singer_sdk-0.47.4-py3-none-any.whl", hash = "sha256:9522f92e7c14dc5773bc4d83dee456ad4760869957f718bc053f75c43121107e", size = 192387, upload-time = "2025-06-25T00:49:56.278Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/55/bf14c26b2082b301bba75abe8938f95d6088ff42963b1807b15cc8cee14d/singer_sdk-0.49.1-py3-none-any.whl", hash = "sha256:fdcf74ba8f27f039363334eafeb7d7ecf9e7c67014ab5fcfe8210fe195fe8f7f", size = 201125, upload-time = "2025-09-14T18:32:15.773Z" },
 ]
 
 [package.optional-dependencies]
@@ -888,7 +888,7 @@ typing = [
 requires-dist = [
     { name = "colorama", specifier = "==0.4.*" },
     { name = "requests-cache", specifier = "==1.2.*" },
-    { name = "singer-sdk", specifier = "==0.47.*" },
+    { name = "singer-sdk", specifier = "==0.49.*" },
     { name = "structlog", specifier = "==25.4.*" },
 ]
 
@@ -897,12 +897,12 @@ ci = [{ name = "pytest-github-actions-annotate-failures", specifier = ">=0.3" }]
 dev = [
     { name = "mypy", specifier = ">=1.11.1" },
     { name = "pytest", specifier = "==8.*" },
-    { name = "singer-sdk", extras = ["testing"], specifier = "==0.47.*" },
+    { name = "singer-sdk", extras = ["testing"], specifier = "==0.49.*" },
     { name = "types-requests" },
 ]
 testing = [
     { name = "pytest", specifier = "==8.*" },
-    { name = "singer-sdk", extras = ["testing"], specifier = "==0.47.*" },
+    { name = "singer-sdk", extras = ["testing"], specifier = "==0.49.*" },
 ]
 typing = [
     { name = "mypy", specifier = ">=1.11.1" },
