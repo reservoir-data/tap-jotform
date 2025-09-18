@@ -395,3 +395,32 @@ class LabelsStream(JotformStream):
         UPDATED_AT,
         th.Property("sublabels", th.ArrayType(LABEL_SCHEMA)),
     ).to_dict()
+
+
+class SubusersStream(JotformStream):
+    """Subusers stream."""
+
+    name = "subusers"
+    path = "/user/subusers"
+    primary_keys = ("username",)
+
+    selected_by_default = False
+
+    schema = th.PropertiesList(
+        th.Property("owner", th.StringType),
+        th.Property("status", th.StringType),
+        th.Property("email", th.EmailType),
+        th.Property("username", th.StringType),
+        CREATED_AT,
+        th.Property(
+            "permissions",
+            th.ArrayType(
+                th.ObjectType(
+                    th.Property("type", th.StringType),
+                    th.Property("resource_id", th.StringType),
+                    th.Property("access_type", th.StringType),
+                    th.Property("title", th.StringType),
+                ),
+            ),
+        ),
+    ).to_dict()

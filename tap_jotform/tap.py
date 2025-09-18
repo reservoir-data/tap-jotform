@@ -78,6 +78,7 @@ class TapJotform(Tap):
             streams.ReportsStream(self),
             streams.UserHistory(self),
             streams.LabelsStream(self),
+            streams.SubusersStream(self),
         ]
         if self.config.get("include_deprecated_streams"):
             all_streams.extend(
