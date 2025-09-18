@@ -2,24 +2,12 @@
 
 from __future__ import annotations
 
-from importlib import metadata
+from typing import override
 
 from singer_sdk import Stream, Tap
 from singer_sdk import typing as th
 
 from tap_jotform import streams
-
-
-def get_package_version() -> str:
-    """Return the version number.
-
-    Returns:
-        The package version number.
-    """
-    try:
-        return metadata.version("tap-jotform")
-    except metadata.PackageNotFoundError:
-        return "<unknown>"
 
 
 class TapJotform(Tap):
@@ -42,12 +30,6 @@ class TapJotform(Tap):
             required=False,
             default="https://api.jotform.com",
             description="API Base URL",
-        ),
-        th.Property(
-            "user_agent",
-            th.StringType,
-            default=f"{name}/{get_package_version()}",
-            description="User-Agent header",
         ),
         th.Property(
             "start_date",
@@ -87,12 +69,8 @@ class TapJotform(Tap):
         ),
     ).to_dict()
 
+    @override
     def discover_streams(self) -> list[Stream]:
-        """Return a list of discovered streams.
-
-        Returns:
-            A list of discovered streams.
-        """
         all_streams: list[Stream] = [
             streams.FormsStream(self),
             streams.QuestionsStream(self),

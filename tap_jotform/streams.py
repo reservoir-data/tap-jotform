@@ -3,14 +3,16 @@
 from __future__ import annotations
 
 import json
-import typing as t
+from typing import TYPE_CHECKING, Any, override
 
 from singer_sdk import typing as th  # JSON Schema typing helpers
 from singer_sdk.helpers._typing import TypeConformanceLevel
 
 from tap_jotform.client import JotformPaginatedStream, JotformStream
 
-if t.TYPE_CHECKING:
+if TYPE_CHECKING:
+    from collections.abc import Generator
+
     import requests
     from singer_sdk.helpers.types import Context, Record
 
@@ -61,20 +63,8 @@ class FormsStream(JotformPaginatedStream):
         th.Property("archived", th.IntegerType),
     ).to_dict()
 
-    def get_child_context(
-        self,
-        record: Record,
-        context: Context | None,  # noqa: ARG002
-    ) -> dict:
-        """Return a context dictionary for child streams.
-
-        Args:
-            record: The record being processed.
-            context: The context dictionary for the parent stream.
-
-        Returns:
-            A context dictionary for child streams.
-        """
+    @override
+    def get_child_context(self, record: Record, context: Context | None) -> Context:
         return {"form_id": record["id"]}
 
 
@@ -112,18 +102,12 @@ class QuestionsStream(JotformStream):
         ),
     ).to_dict()
 
+    @override
     def parse_response(
         self,
         response: requests.Response,
-    ) -> t.Generator[dict, None, None]:
-        """Parse the response and return an iterator of result rows.
-
-        Args:
-            response: The response object.
-
-        Yields:
-            An iterator of parsed records.
-        """
+    ) -> Generator[dict, None, None]:
+        """Parse the response and return an iterator of result rows."""
         for qid, question in response.json()["content"].items():
             yield {
                 "qid": qid,
@@ -190,6 +174,7 @@ class SubmissionsStream(JotformPaginatedStream):
         ),
     ).to_dict()
 
+    @override
     def post_process(self, row: Record, context: Context | None = None) -> Record:
         """Post-process a row.
 
@@ -304,20 +289,12 @@ class UserHistory(JotformStream):
         th.Property("subuser", th.StringType),
     ).to_dict()
 
+    @override
     def get_url_params(
         self,
-        context: Context | None,  # noqa: ARG002
-        next_page_token: t.Any | None,  # noqa: ANN401, ARG002
-    ) -> dict[str, t.Any] | str:
-        """Get the URL parameters.
-
-        Args:
-            context: The context object.
-            next_page_token: The next page token.
-
-        Returns:
-            The URL parameters.
-        """
+        context: Context | None,
+        next_page_token: Any | None,
+    ) -> dict[str, Any] | str:
         return {
             "action": "all",
             "date": "lastWeek",
@@ -374,8 +351,8 @@ class FoldersStream(JotformStream):
         th.Property("subfolders", th.ArrayType(th.ObjectType())),
     ).to_dict()
 
+    @override
     def post_process(self, row: Record, context: Context | None = None) -> Record:
-        """Post-process a row of data."""
         forms = {
             form_id: JotformStream.post_process(self, form, context)
             for form_id, form in row.pop("forms", {}).items()

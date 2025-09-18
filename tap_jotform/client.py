@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import typing as t
+from typing import TYPE_CHECKING, Any, override
 
 import requests
 import requests_cache
@@ -10,7 +10,9 @@ from singer_sdk.authenticators import APIKeyAuthenticator
 from singer_sdk.pagination import BaseOffsetPaginator
 from singer_sdk.streams import RESTStream
 
-if t.TYPE_CHECKING:
+if TYPE_CHECKING:
+    from collections.abc import Generator
+
     from singer_sdk.helpers.types import Context, Record
 
 
@@ -29,90 +31,47 @@ class JotformStream(RESTStream):
 
     _requests_session: requests.Session | None
 
-    def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
+    @override
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Initialize the stream object."""
         super().__init__(*args, **kwargs)
         self._requests_session = None
 
+    @override
     @property
     def url_base(self) -> str:
-        """Return the API URL root, configurable via tap settings.
-
-        Returns:
-            The API URL root.
-        """
         return self.config["api_url"]
 
+    @override
     @property
     def authenticator(self) -> APIKeyAuthenticator:
-        """Return a new authenticator object.
+        return APIKeyAuthenticator(key="APIKEY", value=self.config["api_key"])
 
-        Returns:
-            An authenticator instance.
-        """
-        return APIKeyAuthenticator.create_for_stream(
-            self,
-            key="APIKEY",
-            value=self.config["api_key"],
-            location="header",
-        )
-
-    @property
-    def http_headers(self) -> dict:
-        """Return the http headers needed.
-
-        Returns:
-            A dictionary of headers.
-        """
-        headers = {}
-        if "user_agent" in self.config:
-            headers["User-Agent"] = self.config.get("user_agent")
-        return headers
-
+    @override
     def post_process(
         self,
         row: Record,
-        context: Context | None = None,  # noqa: ARG002
+        context: Context | None = None,
     ) -> dict:
-        """Post-process a record.
-
-        Args:
-            row: The record to post-process.
-            context: The context object.
-
-        Returns:
-            The post-processed record.
-        """
         for field in self.INTEGER_FIELDS:
             value = row.get(field)
             row[field] = int(value) if value else None
         return row
 
+    @override
     def parse_response(
         self,
         response: requests.Response,
-    ) -> t.Generator[dict, None, None]:
-        """Parse the response and return an iterator of result rows.
-
-        Args:
-            response: The response object.
-
-        Yields:
-            An iterator of parsed records.
-        """
+    ) -> Generator[dict, None, None]:
         self.logger.info(
             "Received response",
             extra={"limit_left": response.json()["limit-left"]},
         )
         yield from super().parse_response(response)
 
+    @override
     @property
     def requests_session(self) -> requests_cache.CachedSession | requests.Session:
-        """Return a new requests session object.
-
-        Returns:
-            A new requests session object.
-        """
         if self._requests_session is None:  # type: ignore[has-type]
             if (
                 self.config.get("requests_cache")
@@ -129,29 +88,17 @@ class JotformStream(RESTStream):
 class JotformPaginatedStream(JotformStream):
     """A Jotform stream with pagination."""
 
+    @override
     def get_new_paginator(self) -> JotformPaginator:
-        """Return a new instance of a paginator.
-
-        Returns:
-            A new instance of a paginator.
-        """
         return JotformPaginator(0, self.page_size)
 
+    @override
     def get_url_params(
         self,
         context: Context | None,
         next_page_token: int | None,
-    ) -> dict[str, t.Any]:
-        """Return a dictionary of values to be used in URL parameterization.
-
-        Args:
-            context: The context object.
-            next_page_token: The next page token.
-
-        Returns:
-            A dictionary of values to be used in URL parameterization.
-        """
-        params: dict[str, t.Any] = {"limit": self.page_size}
+    ) -> dict[str, Any]:
+        params: dict[str, Any] = {"limit": self.page_size}
 
         starting_value = self.get_starting_timestamp(context)
         if starting_value and self.replication_key:
@@ -166,16 +113,9 @@ class JotformPaginatedStream(JotformStream):
 
         return params
 
+    @override
     def post_process(self, row: Record, context: Context | None = None) -> Record:
-        """Post-process a record.
-
-        Args:
-            row: The record to post-process.
-            context: The context object.
-
-        Returns:
-            The post-processed record.
-        """
+        """Post-process a record."""
         row = super().post_process(row, context)
         row["updated_at"] = row["updated_at"] or row["created_at"]
         return row
