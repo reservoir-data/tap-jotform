@@ -45,13 +45,15 @@ A full list of supported settings and capabilities is available by running: `tap
 
 ## Streams
 
-| Stream name | API endpoint      | API docs                                       | Notes |
-| :---------- | :---------------- | :--------------------------------------------- | :---- |
-| forms       | /user/forms       | https://api.jotform.com/docs/#user-forms       | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
-| questions   | /form/{form_id}/questions | https://api.jotform.com/docs/#form-id-questions | |
-| submissions | /user/submissions | https://api.jotform.com/docs/#user-submissions | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication).  |
-| reports     | /user/reports     | https://api.jotform.com/docs/#user-reports | |
-| user_history | /user/history    | https://api.jotform.com/docs/#user-history | |
+| Stream name          | API endpoint              | API docs                                        | Notes                                                                                                  |
+| :------------------- | :------------------------ | :---------------------------------------------- | :----------------------------------------------------------------------------------------------------- |
+| forms                | /user/forms               | https://api.jotform.com/docs/#user-forms        | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
+| questions            | /form/{form_id}/questions | https://api.jotform.com/docs/#form-id-questions |                                                                                                        |
+| submissions          | /user/submissions         | https://api.jotform.com/docs/#user-submissions  | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
+| reports              | /user/reports             | https://api.jotform.com/docs/#user-reports      |                                                                                                        |
+| user_history         | /user/history             | https://api.jotform.com/docs/#user-history      |                                                                                                        |
+| folders (deprecated) | /user/folders             | https://api.jotform.com/docs/#user-folders      |                                                                                                        |
+| labels               | /user/labels              | https://api.jotform.com/docs/#get-user-labels   |                                                                                                        |
 
 
 ### Configuring incremental replication
