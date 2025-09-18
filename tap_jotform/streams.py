@@ -341,6 +341,8 @@ class FoldersStream(JotformStream):
     )
     TYPE_CONFORMANCE_LEVEL = TypeConformanceLevel.ROOT_ONLY
 
+    selected_by_default = False
+
     schema = th.PropertiesList(
         th.Property("id", th.StringType),
         th.Property("path", th.StringType),
@@ -380,3 +382,39 @@ class FoldersStream(JotformStream):
         }
         row["forms"] = forms
         return row
+
+
+LABEL_FIELDS = [
+    th.Property("id", th.StringType),
+    th.Property("name", th.StringType),
+    th.Property("order", th.StringType),
+    th.Property("color", th.StringType),
+    CREATED_AT,
+    UPDATED_AT,
+    th.Property("parent_label_id", th.StringType),
+]
+
+LABEL_SCHEMA = th.ObjectType(
+    *LABEL_FIELDS,
+    th.Property(
+        "sublabels",
+        th.ArrayType(th.ObjectType(*LABEL_FIELDS)),
+    ),
+)
+
+
+class LabelsStream(JotformStream):
+    """Labels stream."""
+
+    name = "labels"
+    path = "/user/labels"
+    primary_keys = ("id",)
+
+    schema = th.PropertiesList(
+        th.Property("id", th.StringType),
+        th.Property("owner", th.StringType),
+        th.Property("owner_type", th.StringType),
+        CREATED_AT,
+        UPDATED_AT,
+        th.Property("sublabels", th.ArrayType(LABEL_SCHEMA)),
+    ).to_dict()
