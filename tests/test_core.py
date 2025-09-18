@@ -16,6 +16,7 @@ SAMPLE_CONFIG: dict[str, Any] = {
         },
     },
     "start_date": "2021-01-01T00:00:00Z",
+    "include_deprecated_streams": False,
 }
 
 
