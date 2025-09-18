@@ -6,17 +6,13 @@ import sys
 
 import nox
 
+PYPROJECT = nox.project.load_toml("pyproject.toml")
+PYTHON_VERSIONS = nox.project.python_versions(PYPROJECT)
+
 cli = "tap-jotform"
 src_dir = "tap_jotform"
 tests_dir = "tests"
 
-python_versions = [
-    "3.14",
-    "3.13",
-    "3.12",
-    "3.11",
-    "3.10",
-]
 locations = src_dir, tests_dir, "noxfile.py"
 nox.needs_version = ">=2025.2.9"
 nox.options.default_venv_backend = "uv"
@@ -56,7 +52,7 @@ def run(session: nox.Session) -> None:
 
 
 @nox.session
-def mypy(session: nox.Session) -> None:
+def typing(session: nox.Session) -> None:
     """Check types with mypy."""
     env = {
         "UV_PROJECT_ENVIRONMENT": session.virtualenv.location,
@@ -72,11 +68,12 @@ def mypy(session: nox.Session) -> None:
     )
     args = session.posargs or [src_dir, tests_dir]
     session.run("mypy", *args)
+    session.run("ty", "check", src_dir, tests_dir)
     if not session.posargs:
         session.run("mypy", f"--python-executable={sys.executable}", "noxfile.py")
 
 
-@nox.session(python=python_versions)
+@nox.session(python=PYTHON_VERSIONS)
 def tests(session: nox.Session) -> None:
     """Execute pytest tests and compute coverage."""
     env = {

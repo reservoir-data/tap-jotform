@@ -16,11 +16,9 @@ keywords = [
 license = "Apache-2.0"
 maintainers = [ { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" } ]
 authors = [ { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" } ]
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
@@ -52,6 +50,7 @@ testing = [
 ]
 typing = [
   "mypy>=1.11.1",
+  "ty>=0.0.1a20",
   "types-requests",
 ]
 
