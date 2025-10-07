@@ -582,7 +582,7 @@ wheels = [
 
 [[package]]
 name = "singer-sdk"
-version = "0.49.1"
+version = "0.50.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "backoff" },
@@ -603,9 +603,9 @@ dependencies = [
     { name = "typing-extensions", marker = "python_full_version < '3.13'" },
     { name = "universal-pathlib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/61/d0/0bb79565d17e6100288dba02c5db12a38c121ed294b6a464cec3c1becef5/singer_sdk-0.49.1.tar.gz", hash = "sha256:8839ef96e169c83b1c2c63bcc45156e65cd69e6f9dc944f07767fd385f69777d", size = 1311097, upload-time = "2025-09-14T18:32:17.867Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/60/5b/1fe0f383a9b3adabfe460e3ab1bd1256de0f7577e1f189d5977b0eb2aa77/singer_sdk-0.50.2.tar.gz", hash = "sha256:764053c5c23f1e70823ae72234371871e7b97ea99428f21df26cef5bc5dc5328", size = 1316254, upload-time = "2025-10-06T21:41:23.566Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/aa/55/bf14c26b2082b301bba75abe8938f95d6088ff42963b1807b15cc8cee14d/singer_sdk-0.49.1-py3-none-any.whl", hash = "sha256:fdcf74ba8f27f039363334eafeb7d7ecf9e7c67014ab5fcfe8210fe195fe8f7f", size = 201125, upload-time = "2025-09-14T18:32:15.773Z" },
+    { url = "https://files.pythonhosted.org/packages/ce/22/b871608a35d1ccfe9a21c4398d8001492df29c82a7b0ad519937d6226a55/singer_sdk-0.50.2-py3-none-any.whl", hash = "sha256:2ec6bf42312fa7f8d9906428e347959df82b805c21e3afdcd37cfbe0e5b06d66", size = 203763, upload-time = "2025-10-06T21:41:21.531Z" },
 ]
 
 [package.optional-dependencies]
@@ -686,7 +686,7 @@ typing = [
 requires-dist = [
     { name = "colorama", specifier = "==0.4.*" },
     { name = "requests-cache", specifier = "==1.2.*" },
-    { name = "singer-sdk", specifier = "==0.49.*" },
+    { name = "singer-sdk", specifier = "==0.50.*" },
     { name = "structlog", specifier = "==25.4.*" },
 ]
 
@@ -695,13 +695,13 @@ ci = [{ name = "pytest-github-actions-annotate-failures", specifier = ">=0.3" }]
 dev = [
     { name = "mypy", specifier = ">=1.11.1" },
     { name = "pytest", specifier = "==8.*" },
-    { name = "singer-sdk", extras = ["testing"], specifier = "==0.49.*" },
+    { name = "singer-sdk", extras = ["testing"], specifier = "==0.50.*" },
     { name = "ty", specifier = ">=0.0.1a20" },
     { name = "types-requests" },
 ]
 testing = [
     { name = "pytest", specifier = "==8.*" },
-    { name = "singer-sdk", extras = ["testing"], specifier = "==0.49.*" },
+    { name = "singer-sdk", extras = ["testing"], specifier = "==0.50.*" },
 ]
 typing = [
     { name = "mypy", specifier = ">=1.11.1" },
