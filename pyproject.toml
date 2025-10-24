@@ -27,7 +27,7 @@ dynamic = [ "version" ]
 dependencies = [
   "colorama==0.4.*",
   "requests-cache==1.2.*",
-  "singer-sdk==0.50.*",
+  "singer-sdk==0.51.*",
   "structlog==25.4.*",
 ]
 
@@ -46,7 +46,7 @@ ci = [
 ]
 testing = [
   "pytest==8.*",
-  "singer-sdk[testing]==0.50.*",
+  "singer-sdk[testing]==0.51.*",
 ]
 typing = [
   "mypy>=1.11.1",
