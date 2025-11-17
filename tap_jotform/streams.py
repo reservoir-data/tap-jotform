@@ -212,7 +212,7 @@ class ReportsStream(JotformStream):
         th.Property("title", th.StringType),
         CREATED_AT,
         UPDATED_AT,
-        th.Property("fields", th.ArrayType(th.StringType)),
+        th.Property("fields", th.ArrayType(th.StringType)),  # ty: ignore[invalid-argument-type]
         th.Property(
             "list_type",
             th.StringType,
