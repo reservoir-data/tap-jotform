@@ -45,11 +45,11 @@ ci = [
   "pytest-github-actions-annotate-failures>=0.3",
 ]
 testing = [
-  "pytest==8.*",
-  "singer-sdk[testing]==0.52.*",
+  "pytest>=9",
+  "singer-sdk[testing]",
 ]
 typing = [
-  "mypy>=1.11.1",
+  "mypy>=1.18",
   "ty>=0.0.1a20",
   "types-requests",
 ]
@@ -84,3 +84,4 @@ max_supported_python = "3.14"
 addopts = [
   "-vvv",
 ]
+minversion = "9.0"
