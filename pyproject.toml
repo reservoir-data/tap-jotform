@@ -30,7 +30,6 @@ dependencies = [
   "singer-sdk==0.53.*",
   "structlog==25.5.*",
 ]
-
 urls.Documentation = "https://github.com/reservoir-data/tap-jotform/#readme"
 urls.Homepage = "https://github.com/reservoir-data/tap-jotform"
 urls.Repository = "https://github.com/reservoir-data/tap-jotform"
@@ -54,8 +53,8 @@ typing = [
   "types-requests",
 ]
 
-[tool.hatch.version]
-source = "vcs"
+[tool.hatch]
+version.source = "vcs"
 
 [tool.ruff]
 line-length = 88
@@ -80,8 +79,8 @@ lint.pydocstyle.convention = "google"
 [tool.pyproject-fmt]
 max_supported_python = "3.14"
 
-[tool.pytest.ini_options]
-addopts = [
+[tool.pytest]
+ini_options.addopts = [
   "-vvv",
 ]
-minversion = "9.0"
+ini_options.minversion = "9.0"
