@@ -20,11 +20,11 @@ class JotformPaginator(BaseOffsetPaginator):
     """Jotform pagination class."""
 
 
-class JotformStream(RESTStream):
+class JotformStream(RESTStream[int]):
     """Jotform stream class."""
 
     page_size = 100
-    primary_keys: tuple[str, ...] = ("id",)  # type: ignore[assignment]
+    primary_keys: tuple[str, ...] = ("id",)
     records_jsonpath = "$.content[*]"
 
     INTEGER_FIELDS: tuple[str, ...] = ()
@@ -40,7 +40,7 @@ class JotformStream(RESTStream):
     @override
     @property
     def url_base(self) -> str:
-        return self.config["api_url"]
+        return self.config["api_url"]  # type: ignore[no-any-return]
 
     @override
     @property
@@ -52,7 +52,7 @@ class JotformStream(RESTStream):
         self,
         row: Record,
         context: Context | None = None,
-    ) -> dict:
+    ) -> Record:
         for field in self.INTEGER_FIELDS:
             value = row.get(field)
             row[field] = int(value) if value else None
@@ -62,7 +62,7 @@ class JotformStream(RESTStream):
     def parse_response(
         self,
         response: requests.Response,
-    ) -> Generator[dict, None, None]:
+    ) -> Generator[Record, None, None]:
         self.logger.info(
             "Received response",
             extra={"limit_left": response.json()["limit-left"]},
@@ -72,7 +72,7 @@ class JotformStream(RESTStream):
     @override
     @property
     def requests_session(self) -> requests_cache.CachedSession | requests.Session:
-        if self._requests_session is None:  # type: ignore[has-type]
+        if self._requests_session is None:
             if (
                 self.config.get("requests_cache")
                 and self.config["requests_cache"]["enabled"]

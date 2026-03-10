@@ -14,8 +14,6 @@ keywords = [
   "Jotform",
 ]
 license = "Apache-2.0"
-maintainers = [ { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" } ]
-authors = [ { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" } ]
 requires-python = ">=3.12"
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
@@ -25,15 +23,23 @@ classifiers = [
 ]
 dynamic = [ "version" ]
 dependencies = [
-  "colorama==0.4.*",
-  "requests-cache==1.3.*",
-  "singer-sdk==0.53.*",
-  "structlog==25.5.*",
+  "colorama~=0.4.6",
+  "requests-cache~=1.3.1",
+  "singer-sdk~=0.53.5",
+  "structlog~=25.5.0",
 ]
-urls.Documentation = "https://github.com/reservoir-data/tap-jotform/#readme"
-urls.Homepage = "https://github.com/reservoir-data/tap-jotform"
-urls.Repository = "https://github.com/reservoir-data/tap-jotform"
-scripts.tap-jotform = "tap_jotform.tap:TapJotform.cli"
+[[project.authors]]
+name = "Edgar Ramírez-Mondragón"
+email = "edgarrm358@gmail.com"
+[[project.maintainers]]
+name = "Edgar Ramírez-Mondragón"
+email = "edgarrm358@gmail.com"
+[project.scripts]
+tap-jotform = "tap_jotform.tap:TapJotform.cli"
+[project.urls]
+Documentation = "https://github.com/reservoir-data/tap-jotform/#readme"
+Homepage = "https://github.com/reservoir-data/tap-jotform"
+Repository = "https://github.com/reservoir-data/tap-jotform"
 
 [dependency-groups]
 dev = [
@@ -54,33 +60,44 @@ typing = [
 ]
 
 [tool.hatch]
-version.source = "vcs"
+[tool.hatch.version]
+source = "vcs"
 
 [tool.ruff]
 line-length = 88
-lint.select = [
+[tool.ruff.lint]
+select = [
   "ALL",
 ]
-lint.ignore = [
+ignore = [
   "COM812",
   "DJ",
   "ISC001",
   "PD",
 ]
-lint.per-file-ignores."noxfile.py" = [
+per-file-ignores."noxfile.py" = [
   "ANN",
 ]
-lint.per-file-ignores."tests/*" = [
+per-file-ignores."tests/*" = [
   "ANN",
 ]
-lint.flake8-annotations.allow-star-arg-any = true
-lint.pydocstyle.convention = "google"
+flake8-annotations.allow-star-arg-any = true
+pydocstyle.convention = "google"
 
 [tool.pyproject-fmt]
-max_supported_python = "3.14"
+table_format = "long"
 
 [tool.pytest]
-ini_options.addopts = [
+[tool.pytest.ini_options]
+addopts = [
   "-vvv",
 ]
-ini_options.minversion = "9.0"
+minversion = "9"
+
+[tool.mypy]
+enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
+strict = true
+warn_redundant_casts = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true

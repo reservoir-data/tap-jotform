@@ -106,7 +106,7 @@ class QuestionsStream(JotformStream):
     def parse_response(
         self,
         response: requests.Response,
-    ) -> Generator[dict, None, None]:
+    ) -> Generator[Record, None, None]:
         """Parse the response and return an iterator of result rows."""
         for qid, question in response.json()["content"].items():
             yield {
@@ -212,7 +212,7 @@ class ReportsStream(JotformStream):
         th.Property("title", th.StringType),
         CREATED_AT,
         UPDATED_AT,
-        th.Property("fields", th.ArrayType(th.StringType)),  # ty: ignore[invalid-argument-type]
+        th.Property("fields", th.ArrayType(th.StringType)),
         th.Property(
             "list_type",
             th.StringType,
