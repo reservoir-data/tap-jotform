@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, override
 import requests
 import requests_cache
 from singer_sdk.authenticators import APIKeyAuthenticator
-from singer_sdk.pagination import BaseOffsetPaginator
+from singer_sdk.pagination import OffsetPaginator
 from singer_sdk.streams import RESTStream
 
 if TYPE_CHECKING:
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from singer_sdk.helpers.types import Context, Record
 
 
-class JotformPaginator(BaseOffsetPaginator):
+class JotformPaginator(OffsetPaginator):
     """Jotform pagination class."""
 
 
