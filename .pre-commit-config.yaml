@@ -29,17 +29,13 @@ repos:
         args: [--fix, --exit-non-zero-on-fix, --show-fixes]
       - id: ruff-format
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.19.1
-    hooks:
-      - id: mypy
-        pass_filenames: true
-        language: python
-        additional_dependencies:
-        - types-requests==2.32.4.20260107
-
   - repo: https://github.com/astral-sh/uv-pre-commit
     rev: "0.10.7"
     hooks:
       - id: uv-lock
       - id: uv-sync
+
+  - repo: https://github.com/hukkin/mdformat
+    rev: 1.0.0
+    hooks:
+    - id: mdformat

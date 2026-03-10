@@ -20,48 +20,47 @@ Singer Tap for Jotform. Built with the [Meltano Singer SDK](https://sdk.meltano.
 
 ## Capabilities
 
-* `catalog`
-* `state`
-* `discover`
-* `about`
-* `stream-maps`
-* `schema-flattening`
+- `catalog`
+- `state`
+- `discover`
+- `about`
+- `stream-maps`
+- `schema-flattening`
 
 ## Settings
 
-| Setting             | Required | Default | Description |
+| Setting | Required | Default | Description |
 |:--------------------|:--------:|:-------:|:------------|
-| api_key             | True     | None    | Authentication key. See https://api.jotform.com/docs/#authentication |
-| api_url             | False    | https://api.jotform.com | API Base URL |
-| user_agent          | False    | tap-jotform/0.0.1 | User-Agent header |
-| start_date          | False    | None    | Start date for data collection |
-| requests_cache | False    | None    | Cache configuration for HTTP requests |
-| stream_maps         | False    | None    | Config object for stream maps capability. For more information check out [Stream Maps](https://sdk.meltano.com/en/latest/stream_maps.html). |
-| stream_map_config   | False    | None    | User-defined config values to be used within map expressions. |
-| flattening_enabled  | False    | None    | 'True' to enable schema flattening and automatically expand nested properties. |
-| flattening_max_depth| False    | None    | The max depth to flatten schemas. |
+| api_key | True | None | Authentication key. See https://api.jotform.com/docs/#authentication |
+| api_url | False | https://api.jotform.com | API Base URL |
+| user_agent | False | tap-jotform/0.0.1 | User-Agent header |
+| start_date | False | None | Start date for data collection |
+| requests_cache | False | None | Cache configuration for HTTP requests |
+| stream_maps | False | None | Config object for stream maps capability. For more information check out [Stream Maps](https://sdk.meltano.com/en/latest/stream_maps.html). |
+| stream_map_config | False | None | User-defined config values to be used within map expressions. |
+| flattening_enabled | False | None | 'True' to enable schema flattening and automatically expand nested properties. |
+| flattening_max_depth| False | None | The max depth to flatten schemas. |
 
 A full list of supported settings and capabilities is available by running: `tap-jotform --about`
 
 ## Streams
 
-| Stream name          | API endpoint              | API docs                                        | Notes                                                                                                  |
+| Stream name | API endpoint | API docs | Notes |
 | :------------------- | :------------------------ | :---------------------------------------------- | :----------------------------------------------------------------------------------------------------- |
-| forms                | /user/forms               | https://api.jotform.com/docs/#user-forms        | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
-| questions            | /form/{form_id}/questions | https://api.jotform.com/docs/#form-id-questions |                                                                                                        |
-| submissions          | /user/submissions         | https://api.jotform.com/docs/#user-submissions  | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
-| reports              | /user/reports             | https://api.jotform.com/docs/#user-reports      |                                                                                                        |
-| user_history         | /user/history             | https://api.jotform.com/docs/#user-history      |                                                                                                        |
-| folders (deprecated) | /user/folders             | https://api.jotform.com/docs/#user-folders      |                                                                                                        |
-| labels               | /user/labels              | https://api.jotform.com/docs/#get-user-labels   |                                                                                                        |
-
+| forms | /user/forms | https://api.jotform.com/docs/#user-forms | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
+| questions | /form/{form_id}/questions | https://api.jotform.com/docs/#form-id-questions | |
+| submissions | /user/submissions | https://api.jotform.com/docs/#user-submissions | Replication for this stream is opt-in. See instructions [below](#configuring-incremental-replication). |
+| reports | /user/reports | https://api.jotform.com/docs/#user-reports | |
+| user_history | /user/history | https://api.jotform.com/docs/#user-history | |
+| folders (deprecated) | /user/folders | https://api.jotform.com/docs/#user-folders | |
+| labels | /user/labels | https://api.jotform.com/docs/#get-user-labels | |
 
 ### Configuring incremental replication
 
 By default, the `forms` and `submissions` stream are synced with `FULL_TABLE` replication. Incremental replication can be enabled by setting the replication metadata in the stream's entry in the catalog file:
 
-* `replication_method`: set to`INCREMENTAL`
-* `replication_key` set to `created_at` or `updated_at`. The former will omit updated submissions, while the latter will omit new submissions.
+- `replication_method`: set to`INCREMENTAL`
+- `replication_key` set to `created_at` or `updated_at`. The former will omit updated submissions, while the latter will omit new submissions.
 
 For example, to enable incremental replication for the `submissions` stream:
 
@@ -106,7 +105,7 @@ uv sync
 ### Create and Run Tests
 
 Create tests within the `tap_jotform/tests` subfolder and
-  then run:
+then run:
 
 ```bash
 uv run pytest
