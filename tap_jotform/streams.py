@@ -6,7 +6,7 @@ import json
 from typing import TYPE_CHECKING, Any, override
 
 from singer_sdk import typing as th  # JSON Schema typing helpers
-from singer_sdk.helpers._typing import TypeConformanceLevel
+from singer_sdk.helpers.conform import TypeConformanceLevel
 
 from tap_jotform.client import JotformPaginatedStream, JotformStream
 
