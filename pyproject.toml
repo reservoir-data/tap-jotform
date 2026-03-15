@@ -54,8 +54,8 @@ testing = [
   "singer-sdk[testing]",
 ]
 typing = [
-  "mypy>=1.18",
-  "ty>=0.0.1a20",
+  "mypy>=1.19",
+  "ty>=0.0.23",
   "types-requests",
 ]
 
@@ -64,6 +64,7 @@ typing = [
 source = "vcs"
 
 [tool.ruff]
+required-version = ">=0.15"
 line-length = 88
 [tool.ruff.lint]
 select = [
@@ -88,11 +89,20 @@ pydocstyle.convention = "google"
 table_format = "long"
 
 [tool.pytest]
-[tool.pytest.ini_options]
 addopts = [
   "-vvv",
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
 ]
+filterwarnings = [
+  "error",
+  "once:Fields in transformed catalog but not in records:UserWarning",
+]
+log_level = "INFO"
 minversion = "9"
+strict = true
+testpaths = [ "tests" ]
 
 [tool.mypy]
 enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
