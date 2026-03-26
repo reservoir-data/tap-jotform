@@ -112,9 +112,6 @@ jobs:
     name: Static Type Checking
     runs-on: ubuntu-24.04
     needs: run
-    env:
-      NOXSESSION: ${{ matrix.session }}
-      NOXFORCEPYTHON: ${{ matrix.python-version }}
 
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -134,4 +131,4 @@ jobs:
         uvx
         --managed-python
         --with nox==${{ env.NOX_VERSION }}
-        nox --verbose
+        nox --verbose --session

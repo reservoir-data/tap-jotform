@@ -88,6 +88,17 @@ pydocstyle.convention = "google"
 [tool.pyproject-fmt]
 table_format = "long"
 
+[tool.mypy]
+enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
+strict = true
+warn_redundant_casts = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.ty.rules]
+unused-type-ignore-comment = "ignore"
+
 [tool.pytest]
 addopts = [
   "-vvv",
@@ -103,11 +114,3 @@ log_level = "INFO"
 minversion = "9"
 strict = true
 testpaths = [ "tests" ]
-
-[tool.mypy]
-enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
-strict = true
-warn_redundant_casts = true
-warn_unreachable = true
-warn_unused_configs = true
-warn_unused_ignores = true
