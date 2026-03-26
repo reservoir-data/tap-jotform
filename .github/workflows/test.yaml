@@ -131,4 +131,4 @@ jobs:
         uvx
         --managed-python
         --with nox==${{ env.NOX_VERSION }}
-        nox --verbose --session
+        nox --verbose --session typing
