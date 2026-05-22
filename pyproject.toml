@@ -24,8 +24,8 @@ classifiers = [
 dynamic = [ "version" ]
 dependencies = [
   "colorama~=0.4.6",
-  "requests-cache~=1.3.1",
-  "singer-sdk~=0.54.0a5",
+  "requests-cache~=1.3.2",
+  "singer-sdk~=0.54.2",
   "structlog~=25.5.0",
 ]
 [[project.authors]]
@@ -54,9 +54,8 @@ testing = [
   "singer-sdk[testing]",
 ]
 typing = [
-  "mypy>=1.19",
-  "ty>=0.0.23",
-  "types-requests",
+  "mypy>=2",
+  "ty>=0.0.38",
 ]
 
 [tool.hatch]
@@ -101,10 +100,8 @@ unused-type-ignore-comment = "ignore"
 
 [tool.pytest]
 addopts = [
-  "-vvv",
+  "-v",
   "-ra",
-  "--strict-config",
-  "--strict-markers",
 ]
 filterwarnings = [
   "error",
