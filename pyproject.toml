@@ -74,6 +74,7 @@ ignore = [
   "DJ",
   "ISC001",
   "PD",
+  "CPY001", # missing-copyright-notice
 ]
 per-file-ignores."noxfile.py" = [
   "ANN",
