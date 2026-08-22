@@ -27,7 +27,7 @@ dependencies = [
   "colorama~=0.4.6",
   "requests-cache~=1.3.2",
   "singer-sdk~=0.55.0a4",
-  "structlog~=25.5.0",
+  "structlog~=26.1.0",
 ]
 [[project.authors]]
 name = "Edgar Ramírez-Mondragón"
