@@ -31,7 +31,7 @@ concurrency:
 env:
   FORCE_COLOR: "1"
   # renovate: datasource=pypi depName=nox
-  NOX_VERSION: 2026.7.11
+  NOX_VERSION: 2026.8.10
   # renovate: datasource=pypi depName=uv
   UV_VERSION: 0.12.1
 
