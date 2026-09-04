@@ -9,7 +9,7 @@ on:
       - noxfile.py
       - pyproject.toml
       - uv.lock
-      - .github/workflows/test.yml
+      - .github/workflows/test.yaml
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
@@ -18,7 +18,7 @@ on:
       - noxfile.py
       - pyproject.toml
       - uv.lock
-      - .github/workflows/test.yml
+      - .github/workflows/test.yaml
   workflow_dispatch:
 
 permissions:
