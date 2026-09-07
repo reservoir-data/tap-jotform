@@ -29,18 +29,18 @@ dependencies = [
   "singer-sdk~=0.55.0a4",
   "structlog~=26.1.0",
 ]
-[[project.authors]]
-name = "Edgar Ramírez-Mondragón"
-email = "edgarrm358@gmail.com"
 [[project.maintainers]]
 name = "Edgar Ramírez-Mondragón"
 email = "edgarrm358@gmail.com"
-[project.scripts]
-tap-jotform = "tap_jotform.tap:TapJotform.cli"
+[[project.authors]]
+name = "Edgar Ramírez-Mondragón"
+email = "edgarrm358@gmail.com"
 [project.urls]
 Documentation = "https://github.com/reservoir-data/tap-jotform/#readme"
 Homepage = "https://github.com/reservoir-data/tap-jotform"
 Repository = "https://github.com/reservoir-data/tap-jotform"
+[project.scripts]
+tap-jotform = "tap_jotform.tap:TapJotform.cli"
 
 [dependency-groups]
 dev = [
@@ -72,10 +72,10 @@ select = [
 ]
 ignore = [
   "COM812",
+  "CPY001", # missing-copyright-notice
   "DJ",
   "ISC001",
   "PD",
-  "CPY001", # missing-copyright-notice
 ]
 per-file-ignores."noxfile.py" = [
   "ANN",
