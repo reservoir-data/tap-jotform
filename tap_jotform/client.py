@@ -62,7 +62,7 @@ class JotformStream(RESTStream[int]):
     def parse_response(
         self,
         response: requests.Response,
-    ) -> Generator[Record, None, None]:
+    ) -> Generator[Record]:
         self.logger.info(
             "Received response",
             extra={"limit_left": response.json()["limit-left"]},
