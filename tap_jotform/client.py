@@ -24,8 +24,7 @@ class JotformStream(RESTStream[int]):
     """Jotform stream class."""
 
     page_size = 100
-    primary_keys: tuple[str, ...] = ("id",)
-    records_jsonpath = "$.content[*]"
+    primary_keys: list[str] | tuple[str, ...] = ("id",)
 
     INTEGER_FIELDS: tuple[str, ...] = ()
 
@@ -62,12 +61,14 @@ class JotformStream(RESTStream[int]):
     def parse_response(
         self,
         response: requests.Response,
-    ) -> Generator[Record, None, None]:
-        self.logger.info(
-            "Received response",
-            extra={"limit_left": response.json()["limit-left"]},
-        )
-        yield from super().parse_response(response)
+    ) -> Generator[Record]:
+        data = response.json()
+        self.logger.info("Received response", extra={"limit_left": data["limit-left"]})
+        content = data["content"]
+        if isinstance(content, list):
+            yield from content
+        else:
+            yield content
 
     @override
     @property

@@ -61,6 +61,7 @@ class FormsStream(JotformPaginatedStream):
         th.Property("type", th.StringType, allowed_values=["LEGACY", "CARD"]),
         th.Property("favorite", th.IntegerType),
         th.Property("archived", th.IntegerType),
+        th.Property("folders", th.StringType),
     ).to_dict()
 
     @override
@@ -106,7 +107,7 @@ class QuestionsStream(JotformStream):
     def parse_response(
         self,
         response: requests.Response,
-    ) -> Generator[Record, None, None]:
+    ) -> Generator[Record]:
         """Parse the response and return an iterator of result rows."""
         for qid, question in response.json()["content"].items():
             yield {
@@ -234,6 +235,8 @@ class ReportsStream(JotformStream):
         th.Property("form_count", th.IntegerType),
         th.Property("form_url", th.StringType),
         th.Property("last_submission", th.DateTimeType),
+        th.Property("settings", th.StringType),
+        th.Property("properties", th.ArrayType(th.ObjectType())),
     ).to_dict()
 
     def post_process(self, row: Record, context: Context | None = None) -> Record:
@@ -259,15 +262,19 @@ class UserHistory(JotformStream):
     path = "/user/history"
     primary_keys = ("username", "timestamp", "type")
 
+    STATIC_FIELDS = (
+        "type",
+        "username",
+        "server",
+        "timestamp",
+    )
+
     schema = th.PropertiesList(
         th.Property("type", th.StringType),
         th.Property("username", th.StringType),
-        th.Property("ip", th.StringType),
         th.Property("server", th.StringType),
         th.Property("timestamp", th.IntegerType),
-        th.Property("email", th.StringType),
-        th.Property("parent", th.StringType),
-        th.Property("subuser", th.StringType),
+        th.Property("_sdc_data", th.ObjectType(additional_properties=True)),
     ).to_dict()
 
     @override
@@ -281,6 +288,17 @@ class UserHistory(JotformStream):
             "date": "lastWeek",
             "sortBy": "ASC",
         }
+
+    @override
+    def post_process(self, row: Record, context: Context | None = None) -> Record:
+        new: Record = {"_sdc_data": {}}
+        for key in row:
+            if key in self.STATIC_FIELDS:
+                new[key] = row[key]
+            else:
+                new["_sdc_data"][key] = row[key]
+
+        return new
 
 
 class FoldersStream(JotformStream):
