@@ -260,26 +260,7 @@ class UserHistory(JotformStream):
     primary_keys = ("username", "timestamp", "type")
 
     schema = th.PropertiesList(
-        th.Property(
-            "type",
-            th.StringType,
-            allowed_values=[
-                "userCreation",
-                "userLogin",
-                "userLogout",
-                "formCreation",
-                "formUpdate",
-                "formDelete",
-                "formPurge",
-                "lastUpdate",
-                "passwordChanged",
-                "portalCreated",
-                "portalUpdated",
-                "reportCreated",
-                "reportUpdated",
-                "submissionDeleteAll",
-            ],
-        ),
+        th.Property("type", th.StringType),
         th.Property("username", th.StringType),
         th.Property("ip", th.StringType),
         th.Property("server", th.StringType),
