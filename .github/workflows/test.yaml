@@ -3,22 +3,9 @@ name: Test tap-jotform
 on:
   push:
     branches: [main]
-    paths:
-      - tap_jotform/**
-      - tests/**
-      - noxfile.py
-      - pyproject.toml
-      - uv.lock
-      - .github/workflows/test.yaml
   pull_request:
     types: [opened, synchronize, reopened]
-    paths:
-      - tap_jotform/**
-      - tests/**
-      - noxfile.py
-      - pyproject.toml
-      - uv.lock
-      - .github/workflows/test.yaml
+  merge_group:
   workflow_dispatch:
 
 permissions:
@@ -36,9 +23,34 @@ env:
   UV_VERSION: 0.12.7
 
 jobs:
+  files-changed:
+    runs-on: ubuntu-24.04
+    name: Detect file changes
+    outputs:
+      runtime: ${{ steps.changes.outputs.runtime }}
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+      id: changes
+      with:
+        filters: |
+          runtime:
+            - 'tap_jotform/**'
+            - 'tests/**'
+            - 'noxfile.py'
+            - 'pyproject.toml'
+            - 'uv.lock'
+            - '.github/workflows/test.yaml'
+
   build-package:
     name: Build & verify package
     runs-on: ubuntu-latest
+    needs: files-changed
+    if: >-
+      needs.files-changed.outputs.runtime == 'true'
+      || github.event_name == 'workflow_dispatch'
     outputs:
       supported-python-versions: ${{ steps.baipp.outputs.supported_python_classifiers_json_array }}
     steps:
@@ -52,6 +64,10 @@ jobs:
   run:
     name: Run sync and save responses
     runs-on: ubuntu-24.04
+    needs: files-changed
+    if: >-
+      needs.files-changed.outputs.runtime == 'true'
+      || github.event_name == 'workflow_dispatch'
     env:
       NOXSESSION: run
     steps:
@@ -132,3 +148,19 @@ jobs:
         --managed-python
         --with nox==${{ env.NOX_VERSION }}
         nox --verbose --session typing
+
+  ci:
+    name: CI required checks
+    if: always()
+    needs:
+    - build-package
+    - run
+    - tests
+    - typing
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Decide whether the needed jobs succeeded or failed
+      uses: re-actors/alls-green@b5b5b37504aa4183270bd3d855c52a67f212be35 # v1.3.0
+      with:
+        jobs: ${{ toJSON(needs) }}
+        allowed-skips: build-package,run,tests,typing
