@@ -86,7 +86,6 @@ flake8-annotations.allow-star-arg-any = true
 pydocstyle.convention = "google"
 
 [tool.pyproject-fmt]
-max_supported_python = "3.15"
 table_format = "long"
 
 [tool.mypy]
